@@ -11,7 +11,7 @@ Do you have knowledge about zero-knowledge proofs? You should have some.
 
 ## 0x01 Analysis
 <details>
-<summary><mark><font color=MediumAquamarine>查看合约核心源代码👀</font></mark></summary>
+<summary><font color=MediumAquamarine>查看合约核心源代码👀</font></summary>
 
 ```solidity
 contract SafeEscrow {
@@ -59,13 +59,14 @@ contract SafeEscrow {
 首先查看合约逻辑，硬编码了 `Nullifier, WalletIndex`两个参数值，应该是公共输入。其中 `WalletIndex` 是地址的 10 进制表示，合约会对这个地址调用 `checkEmptyWallet` 函数，确保其 balance 不为 0。
 
 合约逻辑非常简明，我们只需要满足：
+
 - `WalletIndex` 地址的 balance 不为 0；
 - 向合约输入一个合法 proof 。
 
 因此，我们去查看circuit的逻辑结构。
 
 <details>
-<summary><mark><font color=MediumAquamarine>查看电路源代码👀</font></mark></summary>
+<summary><font color=MediumAquamarine>查看电路源代码👀</font></summary>
 
 ```go
 type Circuit struct {
