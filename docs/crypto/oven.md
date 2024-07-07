@@ -89,18 +89,12 @@ while True:
 2. 我们可以根据上述式子构建 Lattice: 
 
    $$
-   M=\begin{pmatrix}
-   (q_1-1)&&&&\\
-   &(q_2-1)&&&\\
-   &&(q_3-1)&&\\
-   c_1&c_2&c_3&1&\\
-   r_1&r_2&r_3&0&K\\
-   \end{pmatrix}
+   M=\begin{pmatrix}(q_1-1)&&&&\\ &(q_2-1)&&&\\ &&(q_3-1)&&\\ c_1&c_2&c_3&1&\\ r_1&r_2&r_3&0&K\\ \end{pmatrix}
    $$
 
     解释：
 
-    - K是FLAG的一个上界
+    -  K 是 `FLAG` 的一个上界
     - 空白处均为0
 
 1. 根据 Babai 的CVP解决算法，一定存在一个解向量 $\pmb{j}=(l_1,l_2,l_3,FLAG,1)$ ，使得 $\pmb{j}M=\pmb{j_k}$ 成立

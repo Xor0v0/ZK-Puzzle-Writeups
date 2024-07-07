@@ -88,9 +88,11 @@ func (circuit *Circuit) Define(api frontend.API) error {
 电路逻辑可以总结为以下等式：
 
 $$
-secret ^ 5 = nullifier \\
-secret * wallet\_index = nullifier \\
-wallet\_index = wallet\_sanity = secret
+\begin{aligned}
+&secret ^ 5 = nullifier \\
+&secret * wallet\_index = nullifier \\
+&wallet\_index = wallet\_sanity = secret
+\end{aligned}
 $$
 
 一共四个未知数，但从合约中我们已经知道其中两个未知数 `wallet_index, nullifier`。三个等式解两个未知数：
@@ -238,7 +240,7 @@ func printGroth16Proof(proof [8]*big.Int) string {
 我自己在 S 网部署了一个合约测试，最后可以直接使用 cast 工具查看是否 solved：
 
 ```bash
-cast call 0x0bde4e8bdb83bd29f073c72709daf1e07036e394 "solved()" --rpc-url https://eth-sepolia.g.alchemy.com/v2/SsCoXOMiqnQNCmotfDjEDu3RgiQ9uxp_
+cast call 0x0bde4e8bdb83bd29f073c72709daf1e07036e394 "solved()" --rpc-url https://eth-sepolia.g.alchemy.com/v2/your_api_key
 ```
 
 返回结果： `0x0000000000000000000000000000000000000000000000000000000000000001`.
