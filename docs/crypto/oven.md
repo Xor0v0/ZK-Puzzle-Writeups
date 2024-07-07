@@ -3,7 +3,7 @@ title: Crypto - Oven
 description: 2023 | ParadigmCTF | Crypto
 ---
 
-## 0x00 Puzzle Discription
+## 0x00 Puzzle Description
 
 > 题目地址： https://github.com/paradigmxyz/paradigm-ctf-2023/tree/main/oven
 
@@ -82,11 +82,12 @@ while True:
 
 ## 0x01 Analysis
 
-问题就出在代码： `r = (v - c * FLAG) % (p - 1)` 上，由于 r，c，p均是已知值，于是：
+问题就出在代码： $r = (v - c * FLAG) % (p - 1)$ 上，由于 r，c，p均是已知值，于是：
 
 1. 首先对上述式子进行数学变形： $r-v+c*FLAG=0\mod (p-1)$ ，只有 v 和 FLAG 是未知数。
 
-2. 我们可以根据上述式子构建 Lattice：
+2. 我们可以根据上述式子构建 Lattice: 
+
    $$
    M=\begin{pmatrix}
    (q_1-1)&&&&\\
@@ -97,13 +98,13 @@ while True:
    \end{pmatrix}
    $$
 
-解释：
+    解释：
 
-- K是FLAG的一个上界
-- 空白处均为0
+    - K是FLAG的一个上界
+    - 空白处均为0
 
-3. 根据 Babai 的CVP解决算法，一定存在一个解向量 $\pmb{j}=(l_1,l_2,l_3,FLAG,1)$ ，使得 $\pmb{j}M=\pmb{j_k}$ 成立
-4. 注意到 $\pmb{j_k}$ 在格中是一个短向量，于是我们可以采用 LLL 算法在多项式时间内找到这个短向量。注意，短向量的每一个元素用 64bit 可以表示，于是确定上界 $K=2^{64}$ 。 
+1. 根据 Babai 的CVP解决算法，一定存在一个解向量 $\pmb{j}=(l_1,l_2,l_3,FLAG,1)$ ，使得 $\pmb{j}M=\pmb{j_k}$ 成立
+2. 注意到 $\pmb{j_k}$ 在格中是一个短向量，于是我们可以采用 LLL 算法在多项式时间内找到这个短向量。注意，短向量的每一个元素用 64bit 可以表示，于是确定上界 $K=2^{64}$ 。 
 
 #### 小技巧
 

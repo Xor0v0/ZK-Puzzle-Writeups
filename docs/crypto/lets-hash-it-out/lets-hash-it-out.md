@@ -3,7 +3,7 @@ title: Crypto - Let's hash it out
 description: 2023 | ZKHACK | Crypto
 ---
 
-## 0x00 Puzzle Discription
+## 0x00 Puzzle Description
 
 It all feels random, but it might not be.
 

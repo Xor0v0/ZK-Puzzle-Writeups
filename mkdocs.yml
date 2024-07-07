@@ -13,6 +13,7 @@ nav:
     - Crypto:
         - Oven: crypto/oven.md
         - Let's hash it out: crypto/lets-hash-it-out/lets-hash-it-out.md
+        - SafeEscrow: crypto/safeescrow.md
 
 # Theme
 theme:
