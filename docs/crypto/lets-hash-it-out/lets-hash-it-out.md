@@ -3,13 +3,18 @@ title: Crypto - Let's hash it out
 description: 2023 | ZKHACK | Crypto
 ---
 
-## 0x00 Puzzle Description
+- [1. Puzzle Description](#1-puzzle-description)
+- [2. Preliminary](#2-preliminary)
+- [3. Solution](#3-solution)
+- [4. Code](#4-code)
+
+## 1. Puzzle Description
 
 It all feels random, but it might not be.
 
 > https://zkhack.dev/events/puzzle1.html
 
-## 0x01 Preliminary
+## 2. Preliminary
 
 1. BLS 签名方案：基于 paring，分为 3 个算法：
    
@@ -91,7 +96,7 @@ It all feels random, but it might not be.
      // Hash(0x7b9db068deeda65efb3f07a3bab9242ad4e5fdbf3bf3f4d229c82f2ebc4beb90)
      ```
 
-## 0x02 Solution
+## 3. Solution
 
 注意到 `hash_to_curve` 函数使用了同样的伪随机数生成器来挑选群生成元 $g_1, g_2, \dots, g_{256}$ ，这意味着每个消息的签名的计算方式为： $\Sigma_i=sk\cdot[b_1(m_i) g_1+b_2(m_i) g_2+\dots+b_{256}(m_i) g_{256}]$ ，其中 $m_i$ 表示第 $i$ 个消息， $b(m_i)$ 表示对第 $i$ 个消息进行 blake2s hash的哈希值，$b_j(m_i)$ 表示哈希值的第 $j$ 位，中括号（[]）里面的内容就是每个 `blake2s hash` 的 `pedersen hash` 结果，最后使用 $sk$ 进行签名。
 
@@ -109,6 +114,6 @@ $$
 \vec{x}\cdot sk\cdot \begin{pmatrix} b_1(m_1)&b_2(m_1)&\dots&b_{256}(m_1)\\ b_1(m_2)&b_2(m_2)&\dots&b_{256}(m_2)\\ \vdots&\vdots&\ddots&\vdots\\ b_1(m_{256})&b_2(m_{256})&\dots&b_{256}(m_{256 })\\ \end{pmatrix} \cdot \begin{pmatrix} g_1\\g_2\\\vdots\\g_{256} \end{pmatrix} =\vec{x}\cdot \begin{pmatrix} \Sigma_1\\\Sigma_2\\\vdots\\\Sigma_{256} \end{pmatrix}
 $$
 
-## 0x03 Code
+## 4. Code
 
 见 `code/` 文件夹。

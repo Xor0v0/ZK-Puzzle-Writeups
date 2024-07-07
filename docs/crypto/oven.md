@@ -3,7 +3,13 @@ title: Crypto - Oven
 description: 2023 | ParadigmCTF | Crypto
 ---
 
-## 0x00 Puzzle Description
+- [1. Puzzle Description](#1-puzzle-description)
+- [2. Analysis](#2-analysis)
+    - [小技巧](#小技巧)
+- [3. EXP](#3-exp)
+
+
+## 1. Puzzle Description
 
 > 题目地址： https://github.com/paradigmxyz/paradigm-ctf-2023/tree/main/oven
 
@@ -80,7 +86,7 @@ while True:
 
 从上述源码，我们可获得的信息有 `t, r, p, g, y` ，其实 c 是可以求出，即使用题目条件中的 `custom_hash` 函数。那么可能发生的漏洞点集中在 `fiat_shamir`  函数中，它是对 FLAG 进行签名的函数功能部分，重点关注： `r = (v - c * FLAG) % (p - 1)` 。对于这个式子，目前我们可以获得的信息有： `r, c, p` 均是已知值，且 FLAG 的位数已经确定： `assert FLAG.bit_length() < 384` 。 可以联想到 Dan Boneh 在 1996 年提出的 [HNP](https://crypto.stanford.edu/~dabo/pubs/abstracts/dhmsb.html) 问题（模数可变），可使用标准的格算法进行攻击。更加详细基于格攻击的密码分析请参考[论文](https://tpm.fail/tpmfail.pdf)。
 
-## 0x01 Analysis
+## 2. Analysis
 
 问题就出在代码： $r = (v - c * FLAG) % (p - 1)$ 上，由于 r，c，p均是已知值，于是：
 
@@ -88,23 +94,24 @@ while True:
 
 2. 我们可以根据上述式子构建 Lattice: 
 
-   $$
-   M=\begin{pmatrix}(q_1-1)&&&&\\ &(q_2-1)&&&\\ &&(q_3-1)&&\\ c_1&c_2&c_3&1&\\ r_1&r_2&r_3&0&K\\ \end{pmatrix}
-   $$
+$$
+M = \begin{pmatrix}(q_1-1)&&&&\\ &(q_2-1)&&&\\ &&(q_3-1)&&\\ c_1&c_2&c_3&1&\\ r_1&r_2&r_3&0&K\\ \end{pmatrix}
+$$
 
-    解释：
+其中：
 
-    -  K 是 `FLAG` 的一个上界
-    - 空白处均为0
+- K 是 `FLAG` 的一个上界；
+- 空白处均为 0 。
 
-1. 根据 Babai 的CVP解决算法，一定存在一个解向量 $\pmb{j}=(l_1,l_2,l_3,FLAG,1)$ ，使得 $\pmb{j}M=\pmb{j_k}$ 成立
-2. 注意到 $\pmb{j_k}$ 在格中是一个短向量，于是我们可以采用 LLL 算法在多项式时间内找到这个短向量。注意，短向量的每一个元素用 64bit 可以表示，于是确定上界 $K=2^{64}$ 。 
+3. 根据 Babai 的CVP解决算法，一定存在一个解向量 $\pmb{j}=(l_1,l_2,l_3,FLAG,1)$ ，使得 $\pmb{j}M=\pmb{j_k}$ 成立。
+
+4. 注意到 $\pmb{j_k}$ 在格中是一个短向量，于是我们可以采用 LLL 算法在多项式时间内找到这个短向量。注意，短向量的每一个元素用 64bit 可以表示，于是确定上界 $K=2^{64}$ 。 
 
 #### 小技巧
 
 这里解释一下数据量的问题，如何知道需要多少组数据可以恢复出 FLAG 呢？这个需要使用到 gaussian heuristic 估计最短向量长度，要求的目标向量范数小于这个长度即可。【但是由于这是CTF比赛背景，所以一般情况下可以先用三四五组数据，如果不行，在用上述方法精确计算。这里我先收集了5组数据备用，实际上用了3组数据，就可解出FLAG】。
 
-## 0x02 EXP
+## 3. EXP
 
 完整EXP（需要sage-python环境）：
 
