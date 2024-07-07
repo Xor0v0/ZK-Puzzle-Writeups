@@ -1,0 +1,5 @@
+mkdocs-material
+jinja2
+mkdocs-git-authors-plugin
+mkdocs-blogging-plugin
+mkdocs-git-revision-date-localized-plugin
