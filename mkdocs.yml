@@ -9,7 +9,7 @@ repo_url: https://github.com/Xor0v0/ZK-Puzzle-Writeups
 
 nav:
     - 简介:
-        -首页: index.md
+        - 首页: index.md
     - Crypto:
         - Oven: crypto/oven.md
         - Let's hash it out: crypto/lets-hash-it-out/lets-hash-it-out.md
