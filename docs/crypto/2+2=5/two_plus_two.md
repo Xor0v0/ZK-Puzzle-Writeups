@@ -1,5 +1,5 @@
 ---
-title: Crypto - 2+2=5
+title: Jolt zkVM - 2+2=5
 description: 2024 | MOCA Italian Hacker Camp | Crypto
 ---
 
@@ -136,6 +136,7 @@ fn two_plus_two() -> u16 {
 jolt 的 R1CS 部分是通用的组件，意味着它适用于每一个 CPU step （也就是“取指-译码-执行”的 instruction cycle），每一个 step 只需要接近 60 个约束和 80 个变量。
 
 每一个 CPU step 需要的输入有：
+
 - 字节码相关（只读）：
   - bytecode read address: 这一步中所需要取出的指令的 idx
   - 预处理之后的指令表示：`(elf_address, bitflags, rs1, rs2, rd, imm)`
@@ -168,6 +169,7 @@ jolt 的 R1CS 部分是通用的组件，意味着它适用于每一个 CPU step
 ## 4. EXP
 
 在写代码之前，我们应该梳理一下我们需要做哪些事情：
+
 1. 修改加法指令的逻辑，使得 `2 + 2 = 5`
 2. 调用 jolt_sdk 生成 proof
 
