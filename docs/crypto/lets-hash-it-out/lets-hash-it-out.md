@@ -116,4 +116,4 @@ $$
 
 ## 4. Code
 
-见 `code/` 文件夹。
+见 [code](https://github.com/Xor0v0/ZK-Puzzle-Writeups/tree/main/docs/crypto/lets-hash-it-out/code) 文件夹。
