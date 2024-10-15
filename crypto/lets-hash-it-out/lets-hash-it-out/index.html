@@ -1,0 +1,890 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="2023 | ZKHACK | Crypto">
+      
+      
+        <meta name="author" content="Xor0v0">
+      
+      
+        <link rel="canonical" href="https://xor0v0.github.io/ZK-Puzzle-Writeups/crypto/lets-hash-it-out/lets-hash-it-out/">
+      
+      
+        <link rel="prev" href="../../oven/">
+      
+      
+        <link rel="next" href="../../safeescrow/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.40">
+    
+    
+      
+        <title>Crypto - Let's hash it out - ZK Puzzle Writeups</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,700,700i%7CFira+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Fira Sans";--md-code-font:"Fira Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-puzzle-description" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="ZK Puzzle Writeups" class="md-header__button md-logo" aria-label="ZK Puzzle Writeups" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ZK Puzzle Writeups
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Crypto - Let's hash it out
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Xor0v0/ZK-Puzzle-Writeups" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Xor0v0/ZK-Puzzle-Writeups
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  简介
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../oven/" class="md-tabs__link">
+          
+  
+  Crypto
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="ZK Puzzle Writeups" class="md-nav__button md-logo" aria-label="ZK Puzzle Writeups" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg>
+
+    </a>
+    ZK Puzzle Writeups
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Xor0v0/ZK-Puzzle-Writeups" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Xor0v0/ZK-Puzzle-Writeups
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    简介
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            简介
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Crypto
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Crypto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../oven/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Oven
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Let's hash it out
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Let's hash it out
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-puzzle-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Puzzle Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preliminary" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Preliminary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Solution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Code
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../safeescrow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SafeEscrow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../group-dynamics/group-dynamics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Group dynamics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2%2B2%3D5/two_plus_two/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2+2=5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../zkCTF/zkCTF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkCTF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-puzzle-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Puzzle Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preliminary" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Preliminary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Solution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Code
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>Let's hash it out</h1>
+
+<ul>
+<li><a href="#1-puzzle-description">1. Puzzle Description</a></li>
+<li><a href="#2-preliminary">2. Preliminary</a></li>
+<li><a href="#3-solution">3. Solution</a></li>
+<li><a href="#4-code">4. Code</a></li>
+</ul>
+<h2 id="1-puzzle-description">1. Puzzle Description<a class="headerlink" href="#1-puzzle-description" title="Permanent link">&para;</a></h2>
+<p>It all feels random, but it might not be.</p>
+<blockquote>
+<p><a href="https://zkhack.dev/events/puzzle1.html">https://zkhack.dev/events/puzzle1.html</a></p>
+</blockquote>
+<h2 id="2-preliminary">2. Preliminary<a class="headerlink" href="#2-preliminary" title="Permanent link">&para;</a></h2>
+<ol>
+<li>BLS 签名方案：基于 paring，分为 3 个算法：</li>
+</ol>
+<p>给定素数阶 <span class="arithmatex">\(r\)</span> 循环群 <span class="arithmatex">\(\mathbb{G}\)</span> 的生成元 <span class="arithmatex">\(g\)</span> ，双线性配对 <span class="arithmatex">\(e\)</span> 。(公开的)</p>
+<ul>
+<li>KeyGen: 生成有限域 <span class="arithmatex">\(GF(r)\)</span> 中的随机标量 <span class="arithmatex">\(sk\)</span> 作为私钥，然后生成公钥 <span class="arithmatex">\(pk = sk \cdot g\)</span> .</li>
+<li>Sign: 给定消息 <span class="arithmatex">\(m\in\mathbb{G}\)</span> ，那么该消息的签名为： <span class="arithmatex">\(\Sigma=sk\cdot m\)</span> .</li>
+<li>Verify: 给定 <span class="arithmatex">\(m, \Sigma, pk\)</span> ，验证等式： <span class="arithmatex">\(e(m, pk)= e(\Sigma, g)\)</span></li>
+</ul>
+<p>注意， <span class="arithmatex">\(m, \Sigma\)</span> 是 <span class="arithmatex">\(G_1\)</span> 元素， <span class="arithmatex">\(pk,g\)</span> 是 <span class="arithmatex">\(G_2\)</span> 元素。</p>
+<ol>
+<li>一般而言，消息都是任意长度的字符串，也可以理解为字节数组，或者一个比特流。为了使用 BLS 签名方案，则需要进行两步操作：一是把任意长度的字符串映射到固定长度的字符串，二是把固定长度字符串映射到群元素。</li>
+</ol>
+<p>如上所述，Challenge采用的方案是首先用 blake2b hash 算法把消息转换为 256 bits ，然后使用 <code>hash_to_curve</code> 技术把 256bits 串映射到群元素（Pedersen hash）。</p>
+<ul>
+<li>
+<p>Blake2b Hash (<code>Cargo.toml</code> 添加 <code>blake2s_simd="version"</code>  )</p>
+<div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>```Rust
+fn main() {
+    let msg = &quot;I love you&quot;;
+    let msg_bytes = msg.as_bytes();
+    let h = blake2s_simd::blake2s(msg_bytes);
+    println!(&quot;{:?}&quot;, h);
+}
+// Hash(0x7b9db068deeda65efb3f07a3bab9242ad4e5fdbf3bf3f4d229c82f2ebc4beb90)
+```
+</code></pre></div></td></tr></table></div>
+
+</li>
+<li>
+<p>Pedersen Hash (<code>Cargo.toml</code> 添加 G1 element type of pairing-friendly curve, )</p>
+<p>inputs: 固定长度 bits 串; output: G1 element</p>
+<p>我们首先把 inputs 按照 <span class="arithmatex">\(r\)</span> 大小分成 <span class="arithmatex">\(k\)</span> 组， 即 <span class="arithmatex">\(|bits|=r * k\)</span> 。然后随机在指定配对友好型椭圆曲线的素数阶子群中选择 <span class="arithmatex">\(k\)</span> 个生成元 <span class="arithmatex">\(g_1, g_2, \dots, g_k\)</span> 。这些生成元必须是随机均匀取样，使得两两之间的关系是无从知晓的。最后计算 pedersen hash <span class="arithmatex">\(h=m_1g_1+m_2g_2+\dots+m_kg_k\)</span> 。其中如何把 <span class="arithmatex">\(r\)</span> 大小的 bits 分组编码成 <span class="arithmatex">\(m_i\)</span> 需要设计成一个 encoding_function （可以简单地将其转化成 ASCII 码，也可以自定义，比如Zcash）。</p>
+<p>因此，为了生成 pedersen hash 我们需要引入 pairing-friendly curve 、安全随机源、已经实现好的 pedersen primitive。</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">ark_bls12_381</span><span class="p">::{</span><span class="n">G1Affine</span><span class="p">,</span><span class="w"> </span><span class="n">G1Projective</span><span class="p">};</span>
+<span class="k">use</span><span class="w"> </span><span class="n">ark_crypto_primitives</span><span class="p">::</span><span class="n">crh</span><span class="p">::{</span>
+<span class="w">    </span><span class="n">pedersen</span><span class="p">::{</span><span class="n">Window</span><span class="p">,</span><span class="w"> </span><span class="n">CRH</span><span class="p">},</span>
+<span class="w">    </span><span class="n">CRH</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">CRHScheme</span>
+<span class="p">};</span>
+<span class="k">use</span><span class="w"> </span><span class="n">blake2s_simd</span><span class="p">::</span><span class="n">Hash</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">rand</span><span class="p">::</span><span class="n">SeedableRng</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">rand_chacha</span><span class="p">::</span><span class="n">ChaCha20Rng</span><span class="p">;</span>
+
+<span class="c1">// Why?</span>
+<span class="cp">#[derive(Clone)]</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">PedersenWindow</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Window</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">PedersenWindow</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">WINDOW_SIZE</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">NUM_WINDOWS</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">hash_to_curve</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u8</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">G1Affine</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">rng_pedersen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">ChaCha20Rng</span><span class="p">::</span><span class="n">from_seed</span><span class="p">([</span>
+<span class="w">        </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="p">]);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CRH</span><span class="p">::</span><span class="o">&lt;</span><span class="n">G1Projective</span><span class="p">,</span><span class="w"> </span><span class="n">PedersenWindow</span><span class="o">&gt;</span><span class="p">::</span><span class="n">setup</span><span class="p">(</span><span class="n">rng_pedersen</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b2hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blake2s_simd</span><span class="p">::</span><span class="n">blake2s</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="n">b2hash</span><span class="p">.</span><span class="n">as_bytes</span><span class="p">().</span><span class="n">to_vec</span><span class="p">(),</span>
+<span class="w">        </span><span class="n">CRH</span><span class="p">::</span><span class="o">&lt;</span><span class="n">G1Projective</span><span class="p">,</span><span class="w"> </span><span class="n">PedersenWindow</span><span class="o">&gt;</span><span class="p">::</span><span class="n">evaluate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">b2hash</span><span class="p">.</span><span class="n">as_bytes</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">()</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;I love you&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">msg_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msg</span><span class="p">.</span><span class="n">as_bytes</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">b2hash</span><span class="p">,</span><span class="w"> </span><span class="n">phash</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash_to_curve</span><span class="p">(</span><span class="n">msg_bytes</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}, {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">b2hash</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">phash</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b2hash</span><span class="p">.</span><span class="n">as_slice</span><span class="p">().</span><span class="n">try_into</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">aa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Hash</span><span class="p">::</span><span class="n">from</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">aa</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// [123, 157, 176, 104, 222, 237, 166, 94, 251, 63, 7, 163, 186, 185, 36, 42, 212, 229, 253, 191, 59, 243, 244, 210, 41, 200, 47, 46, 188, 75, 235, 144], GroupAffine(x=Fp384 &quot;(159228A979000DA250128CABDE97477EEC6A0CADFAE580B7D8AD46F185F4B43AC373CB877FFFEFAB0172AF25562DAF4A)&quot;, y=Fp384 &quot;(04CEBA318A27291276178BDD9093432691D6E9D8E7178CC75FAB366225D332012288DF8EB3CA48D828821EA37D78BC3A)&quot;)</span>
+<span class="c1">// Hash(0x7b9db068deeda65efb3f07a3bab9242ad4e5fdbf3bf3f4d229c82f2ebc4beb90)</span>
+</code></pre></div>
+</li>
+</ul>
+<h2 id="3-solution">3. Solution<a class="headerlink" href="#3-solution" title="Permanent link">&para;</a></h2>
+<p>注意到 <code>hash_to_curve</code> 函数使用了同样的伪随机数生成器来挑选群生成元 <span class="arithmatex">\(g_1, g_2, \dots, g_{256}\)</span> ，这意味着每个消息的签名的计算方式为： <span class="arithmatex">\(\Sigma_i=sk\cdot[b_1(m_i) g_1+b_2(m_i) g_2+\dots+b_{256}(m_i) g_{256}]\)</span> ，其中 <span class="arithmatex">\(m_i\)</span> 表示第 <span class="arithmatex">\(i\)</span> 个消息， <span class="arithmatex">\(b(m_i)\)</span> 表示对第 <span class="arithmatex">\(i\)</span> 个消息进行 blake2s hash的哈希值，<span class="arithmatex">\(b_j(m_i)\)</span> 表示哈希值的第 <span class="arithmatex">\(j\)</span> 位，中括号（[]）里面的内容就是每个 <code>blake2s hash</code> 的 <code>pedersen hash</code> 结果，最后使用 <span class="arithmatex">\(sk\)</span> 进行签名。</p>
+<p>从上述等式可知：由于 <span class="arithmatex">\(g_1, g_2, \dots, g_{256}\)</span> 和 <span class="arithmatex">\(sk\)</span> 均固定，那么任意两个签名之间是可以进行加法运算的，然后得到另一个未知消息的签名。解了这个【线性特性】之后，我们就可以解决这个puzzle了。</p>
+<p>题目要我们给我们自定义的名字生成相应的签名，我们首先可直接算出名字的 <code>blake2s hash</code>  ，当然我们可以继续计算 <code>pedersen hash</code> ，但是由于我们没有 <span class="arithmatex">\(sk\)</span> 信息，因此没办法直接计算出目标签名。</p>
+<p>但是注意到，我们拥有 256 个消息及其签名，这意味我们可以进行线性组合（Linear Combination）。诚然，两个签名相加可以得到一个未知消息的签名，这个消息是不可控的，甚至是无意义的（因为是与生成器相乘的标量是布尔值，如果两个布尔值都为 1 ，那么加起来的结果为 2，显然不可能有某一个 hash 的二进制表示中的某一位是 2）。但是，线性代数教给我们一个利器：线性组合。我们拥有256个消息，那么其 <code>blake2s hash</code> 的每一位我们都是知道的，因此把这些消息的二进制表示作为行向量，形成了一个 <span class="arithmatex">\(256*256\)</span> 的矩阵 <span class="arithmatex">\(A\)</span> ，我们的目标是生成一个 <span class="arithmatex">\(1 * 256\)</span> 行向量 <span class="arithmatex">\(y\)</span> 。那么问题就转换为，寻找一个线性组合解 <span class="arithmatex">\(x\)</span> ，满足 <span class="arithmatex">\(xA=y\)</span> 。有了这个线性组合解，我们就可以使用这 256 个消息来构造出我们想要的消息 <span class="arithmatex">\(m\)</span> ，又因为签名具有线性特性，那么使用这个解去线性组合这 256 个签名得到的就是目标消息的签名。</p>
+<p>需要注意的是，由于我们最终需要使用解去线性组合签名，而后续与生成器进行乘法操作时要求标量在 <span class="arithmatex">\(F_r\)</span> 上，因此在进行矩阵运算时，我们需要把所有的元素都表示在 <span class="arithmatex">\(F_r\)</span> 中。</p>
+<p>数学表达为：</p>
+<div class="arithmatex">\[
+\vec{x}\cdot sk\cdot \begin{pmatrix} b_1(m_1)&amp;b_2(m_1)&amp;\dots&amp;b_{256}(m_1)\\ b_1(m_2)&amp;b_2(m_2)&amp;\dots&amp;b_{256}(m_2)\\ \vdots&amp;\vdots&amp;\ddots&amp;\vdots\\ b_1(m_{256})&amp;b_2(m_{256})&amp;\dots&amp;b_{256}(m_{256 })\\ \end{pmatrix} \cdot \begin{pmatrix} g_1\\g_2\\\vdots\\g_{256} \end{pmatrix} =\vec{x}\cdot \begin{pmatrix} \Sigma_1\\\Sigma_2\\\vdots\\\Sigma_{256} \end{pmatrix}
+\]</div>
+<h2 id="4-code">4. Code<a class="headerlink" href="#4-code" title="Permanent link">&para;</a></h2>
+<p>见 <a href="https://github.com/Xor0v0/ZK-Puzzle-Writeups/tree/main/docs/crypto/lets-hash-it-out/code">code</a> 文件夹。</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-datetime">2024年10月15日 10:41:25</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="贡献者">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+      
+    </span>
+    <nav>
+      
+        <a href="mailto:xor0v0@163.com">Xor0v0</a>
+    </nav>
+  </span>
+
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 - 2030 Xor0v0
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+    
+  </body>
+</html>
