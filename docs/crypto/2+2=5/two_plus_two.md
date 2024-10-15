@@ -3,6 +3,11 @@ title: Jolt zkVM - 2+2=5
 description: 2024 | MOCA Italian Hacker Camp | Crypto
 ---
 
+- [1. Background](#1-background)
+- [2. Puzzle Description](#2-puzzle-description)
+- [3. Alynasis](#3-alynasis)
+- [4. EXP](#4-exp)
+
 ## 1. Background
 
 [Jolt](https://jolt.a16zcrypto.com/intro.html) 是由 A16Z 的密码学家们提出的一个针对 Risc-V ISA （未来将支持更多ISA）的 zkVM 框架，它底层使用了 sumcheck-based SNARK，这个 SNARK 充分利用多变量多项式及其多项式承诺的优势。Jolt zkVM 据说拥有非常出色的性能表现并且还存在优化空间。
