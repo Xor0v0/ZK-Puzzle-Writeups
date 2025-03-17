@@ -3,6 +3,8 @@ title: Crypto - SafeEscrow
 description: 2024 | DreamHack | Crypto | Blockchain
 ---
 
+[TOC]
+
 ## 0x00 Puzzle Description
 
 Do you have knowledge about zero-knowledge proofs? You should have some.

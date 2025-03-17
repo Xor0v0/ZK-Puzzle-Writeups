@@ -3,10 +3,7 @@ title: Crypto - Oven
 description: 2023 | ParadigmCTF | Crypto
 ---
 
-- [1. Puzzle Description](#1-puzzle-description)
-- [2. Analysis](#2-analysis)
-    - [小技巧](#小技巧)
-- [3. EXP](#3-exp)
+[TOC]
 
 
 ## 1. Puzzle Description
@@ -82,7 +79,7 @@ while True:
 
 代码功能：用户可以获取 FLAG 随机签名，生成随机签名的逻辑就在 `fiat-shamir` 函数里。使用了自定义的hash函数 `custom_hash` 来生成哈希，这个函数分别调用了四种不同的hash算法，因此想要破解其随机性目前是不可能的。
 
-另外， `Fiat Shamir` 变换是密码学中非常重要的工具，它的核心在于使用hash算法来生成随机数，为密码协议添加了随机性。FS变换一个典型应用就是为零知识证明系统系统引入了非交互性，进而构造出 snark、stark 等协议。
+`Fiat Shamir` 变换是密码学中非常重要的工具，它的核心在于使用hash算法来生成随机数，为密码协议添加了随机性。FS变换一个典型应用就是为零知识证明系统系统引入了非交互性，进而构造出 snark 等协议。
 
 从上述源码，我们可获得的信息有 `t, r, p, g, y` ，其实 c 是可以求出，即使用题目条件中的 `custom_hash` 函数。那么可能发生的漏洞点集中在 `fiat_shamir`  函数中，它是对 FLAG 进行签名的函数功能部分，重点关注： `r = (v - c * FLAG) % (p - 1)` 。对于这个式子，目前我们可以获得的信息有： `r, c, p` 均是已知值，且 FLAG 的位数已经确定： `assert FLAG.bit_length() < 384` 。 可以联想到 Dan Boneh 在 1996 年提出的 [HNP](https://crypto.stanford.edu/~dabo/pubs/abstracts/dhmsb.html) 问题（模数可变），可使用标准的格算法进行攻击。更加详细基于格攻击的密码分析请参考[论文](https://tpm.fail/tpmfail.pdf)。
 

@@ -1,12 +1,14 @@
 # Welcome to ZK Puzzle Writeups
 
-Hi, I am Xor0v0, 
+Hi, I am Tim, 
 
 - pursuing a Master's degree in Applied Cryptography (research on Zero Knowledge Proof and Lattice Analysis)
-- web2/web3/Cryptography Security ehthusiast
+- web2/web3/Cryptography Security ethhusiast
 - CTFer and zkHACKer
 
-<div align=center><img src="./imgs/welcome.jpg" width="100%"></div>
+Here I will put some writeups during my security learning journey randomly.
+
+<div align=center><img src="./imgs/bg.png" width="100%"></div>
 
 ## Recent Blogs
 {{ blog_content }}

@@ -3,17 +3,7 @@ title: Crypto - Group Dynamics
 description: 2021 | ZKHACK | Crypto
 ---
 
-- [1. Puzzle Description](#1-puzzle-description)
-- [2. Preliminery](#2-preliminery)
-  - [Chinese Reminder Theorem](#chinese-reminder-theorem)
-  - [Groth16 Trusted Setup](#groth16-trusted-setup)
-  - [Prime Order Subgroups and Elliptic Curve Cofactors](#prime-order-subgroups-and-elliptic-curve-cofactors)
-    - [例子](#例子)
-  - [Pohlig-Hellman Algorithm](#pohlig-hellman-algorithm)
-    - [Babystep-Giantstep Algorithm](#babystep-giantstep-algorithm)
-    - [Pohlig-Hellman Algorithm](#pohlig-hellman-algorithm-1)
-    - [优化](#优化)
-- [3. Solution](#3-solution)
+[TOC]
 
 
 ## 1. Puzzle Description

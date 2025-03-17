@@ -3,10 +3,7 @@ title: Jolt zkVM - 2+2=5
 description: 2024 | MOCA Italian Hacker Camp | Crypto
 ---
 
-- [1. Background](#1-background)
-- [2. Puzzle Description](#2-puzzle-description)
-- [3. Alynasis](#3-alynasis)
-- [4. EXP](#4-exp)
+[TOC]
 
 ## 1. Background
 
@@ -167,7 +164,7 @@ jolt 的 R1CS 部分是通用的组件，意味着它适用于每一个 CPU step
 ...
 ```
 
-`cs.constrain_eq_conditional` 目的是当第一个参数为 1，则第二、三个参数必须向灯。`JoltIn::RD_Write` 这个值来自于读写内存模块，表示写入目的寄存器的值，`JoltIn::LookupOutput` 这个值来自指令执行模块，表示指令 lookup 查询后返回的结果。
+`cs.constrain_eq_conditional` 目的是当第一个参数为 1，则第二、三个参数必须相等。`JoltIn::RD_Write` 这个值来自于读写内存模块，表示写入目的寄存器的值，`JoltIn::LookupOutput` 这个值来自指令执行模块，表示指令 lookup 查询后返回的结果。
 
 因此，当补丁删除了这条约束后，zkVM将不再检查 rd 的输出与 lookup 的一致性，因此导致漏洞。也因此我们可以得到 `2 + 2 = 5` 的证明。
 
@@ -195,7 +192,7 @@ jolt 的 R1CS 部分是通用的组件，意味着它适用于每一个 CPU step
     },
 ```
 
-如上，我把其中一个源寄存器加 1，即可得到 `2 + 2 = 5`。（只要能够使得 2+2=5逻辑成立都可）。
+如上，我把其中一个源寄存器加 1，即可得到 `2 + 2 = 5`。（只要能够使得 2+2=5 逻辑成立都可）。
 
 在 host program 中打印 output 并生成 proof 即可。
 
